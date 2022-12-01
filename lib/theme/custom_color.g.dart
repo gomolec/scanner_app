@@ -1,48 +1,34 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 
-const warningcolor = Color(0xFFE6A03A);
-const successcolor = Color(0xFF459B64);
-const errorcolor = Color(0xFFE0002B);
-
+const success = Color(0xFF008F5D);
+const warning = Color(0xFFF68524);
 
 CustomColors lightCustomColors = const CustomColors(
-  sourceWarningcolor: Color(0xFFE6A03A),
-  warningcolor: Color(0xFF845400),
-  onWarningcolor: Color(0xFFFFFFFF),
-  warningcolorContainer: Color(0xFFFFDDB6),
-  onWarningcolorContainer: Color(0xFF2A1800),
-  sourceSuccesscolor: Color(0xFF459B64),
-  successcolor: Color(0xFF006D3A),
-  onSuccesscolor: Color(0xFFFFFFFF),
-  successcolorContainer: Color(0xFF99F6B4),
-  onSuccesscolorContainer: Color(0xFF00210E),
-  sourceErrorcolor: Color(0xFFE0002B),
-  errorcolor: Color(0xFFBF0023),
-  onErrorcolor: Color(0xFFFFFFFF),
-  errorcolorContainer: Color(0xFFFFDAD7),
-  onErrorcolorContainer: Color(0xFF410006),
+  sourceSuccess: Color(0xFF008F5D),
+  success: Color(0xFF006C45),
+  onSuccess: Color(0xFFFFFFFF),
+  successContainer: Color(0xFF88F8BD),
+  onSuccessContainer: Color(0xFF002112),
+  sourceWarning: Color(0xFFF68524),
+  warning: Color(0xFF954A00),
+  onWarning: Color(0xFFFFFFFF),
+  warningContainer: Color(0xFFFFDCC6),
+  onWarningContainer: Color(0xFF301400),
 );
 
 CustomColors darkCustomColors = const CustomColors(
-  sourceWarningcolor: Color(0xFFE6A03A),
-  warningcolor: Color(0xFFFFB959),
-  onWarningcolor: Color(0xFF462B00),
-  warningcolorContainer: Color(0xFF643F00),
-  onWarningcolorContainer: Color(0xFFFFDDB6),
-  sourceSuccesscolor: Color(0xFF459B64),
-  successcolor: Color(0xFF7EDA9A),
-  onSuccesscolor: Color(0xFF00391C),
-  successcolorContainer: Color(0xFF00522A),
-  onSuccesscolorContainer: Color(0xFF99F6B4),
-  sourceErrorcolor: Color(0xFFE0002B),
-  errorcolor: Color(0xFFFFB3AF),
-  onErrorcolor: Color(0xFF68000E),
-  errorcolorContainer: Color(0xFF930018),
-  onErrorcolorContainer: Color(0xFFFFDAD7),
+  sourceSuccess: Color(0xFF008F5D),
+  success: Color(0xFF6BDBA2),
+  onSuccess: Color(0xFF003822),
+  successContainer: Color(0xFF005233),
+  onSuccessContainer: Color(0xFF88F8BD),
+  sourceWarning: Color(0xFFF68524),
+  warning: Color(0xFFFFB785),
+  onWarning: Color(0xFF502500),
+  warningContainer: Color(0xFF713700),
+  onWarningContainer: Color(0xFFFFDCC6),
 );
-
-
 
 /// Defines a set of custom colors, each comprised of 4 complementary tones.
 ///
@@ -51,73 +37,53 @@ CustomColors darkCustomColors = const CustomColors(
 @immutable
 class CustomColors extends ThemeExtension<CustomColors> {
   const CustomColors({
-    required this.sourceWarningcolor,
-    required this.warningcolor,
-    required this.onWarningcolor,
-    required this.warningcolorContainer,
-    required this.onWarningcolorContainer,
-    required this.sourceSuccesscolor,
-    required this.successcolor,
-    required this.onSuccesscolor,
-    required this.successcolorContainer,
-    required this.onSuccesscolorContainer,
-    required this.sourceErrorcolor,
-    required this.errorcolor,
-    required this.onErrorcolor,
-    required this.errorcolorContainer,
-    required this.onErrorcolorContainer,
+    required this.sourceSuccess,
+    required this.success,
+    required this.onSuccess,
+    required this.successContainer,
+    required this.onSuccessContainer,
+    required this.sourceWarning,
+    required this.warning,
+    required this.onWarning,
+    required this.warningContainer,
+    required this.onWarningContainer,
   });
 
-  final Color? sourceWarningcolor;
-  final Color? warningcolor;
-  final Color? onWarningcolor;
-  final Color? warningcolorContainer;
-  final Color? onWarningcolorContainer;
-  final Color? sourceSuccesscolor;
-  final Color? successcolor;
-  final Color? onSuccesscolor;
-  final Color? successcolorContainer;
-  final Color? onSuccesscolorContainer;
-  final Color? sourceErrorcolor;
-  final Color? errorcolor;
-  final Color? onErrorcolor;
-  final Color? errorcolorContainer;
-  final Color? onErrorcolorContainer;
+  final Color? sourceSuccess;
+  final Color? success;
+  final Color? onSuccess;
+  final Color? successContainer;
+  final Color? onSuccessContainer;
+  final Color? sourceWarning;
+  final Color? warning;
+  final Color? onWarning;
+  final Color? warningContainer;
+  final Color? onWarningContainer;
 
   @override
   CustomColors copyWith({
-    Color? sourceWarningcolor,
-    Color? warningcolor,
-    Color? onWarningcolor,
-    Color? warningcolorContainer,
-    Color? onWarningcolorContainer,
-    Color? sourceSuccesscolor,
-    Color? successcolor,
-    Color? onSuccesscolor,
-    Color? successcolorContainer,
-    Color? onSuccesscolorContainer,
-    Color? sourceErrorcolor,
-    Color? errorcolor,
-    Color? onErrorcolor,
-    Color? errorcolorContainer,
-    Color? onErrorcolorContainer,
+    Color? sourceSuccess,
+    Color? success,
+    Color? onSuccess,
+    Color? successContainer,
+    Color? onSuccessContainer,
+    Color? sourceWarning,
+    Color? warning,
+    Color? onWarning,
+    Color? warningContainer,
+    Color? onWarningContainer,
   }) {
     return CustomColors(
-      sourceWarningcolor: sourceWarningcolor ?? this.sourceWarningcolor,
-      warningcolor: warningcolor ?? this.warningcolor,
-      onWarningcolor: onWarningcolor ?? this.onWarningcolor,
-      warningcolorContainer: warningcolorContainer ?? this.warningcolorContainer,
-      onWarningcolorContainer: onWarningcolorContainer ?? this.onWarningcolorContainer,
-      sourceSuccesscolor: sourceSuccesscolor ?? this.sourceSuccesscolor,
-      successcolor: successcolor ?? this.successcolor,
-      onSuccesscolor: onSuccesscolor ?? this.onSuccesscolor,
-      successcolorContainer: successcolorContainer ?? this.successcolorContainer,
-      onSuccesscolorContainer: onSuccesscolorContainer ?? this.onSuccesscolorContainer,
-      sourceErrorcolor: sourceErrorcolor ?? this.sourceErrorcolor,
-      errorcolor: errorcolor ?? this.errorcolor,
-      onErrorcolor: onErrorcolor ?? this.onErrorcolor,
-      errorcolorContainer: errorcolorContainer ?? this.errorcolorContainer,
-      onErrorcolorContainer: onErrorcolorContainer ?? this.onErrorcolorContainer,
+      sourceSuccess: sourceSuccess ?? this.sourceSuccess,
+      success: success ?? this.success,
+      onSuccess: onSuccess ?? this.onSuccess,
+      successContainer: successContainer ?? this.successContainer,
+      onSuccessContainer: onSuccessContainer ?? this.onSuccessContainer,
+      sourceWarning: sourceWarning ?? this.sourceWarning,
+      warning: warning ?? this.warning,
+      onWarning: onWarning ?? this.onWarning,
+      warningContainer: warningContainer ?? this.warningContainer,
+      onWarningContainer: onWarningContainer ?? this.onWarningContainer,
     );
   }
 
@@ -127,61 +93,48 @@ class CustomColors extends ThemeExtension<CustomColors> {
       return this;
     }
     return CustomColors(
-      sourceWarningcolor: Color.lerp(sourceWarningcolor, other.sourceWarningcolor, t),
-      warningcolor: Color.lerp(warningcolor, other.warningcolor, t),
-      onWarningcolor: Color.lerp(onWarningcolor, other.onWarningcolor, t),
-      warningcolorContainer: Color.lerp(warningcolorContainer, other.warningcolorContainer, t),
-      onWarningcolorContainer: Color.lerp(onWarningcolorContainer, other.onWarningcolorContainer, t),
-      sourceSuccesscolor: Color.lerp(sourceSuccesscolor, other.sourceSuccesscolor, t),
-      successcolor: Color.lerp(successcolor, other.successcolor, t),
-      onSuccesscolor: Color.lerp(onSuccesscolor, other.onSuccesscolor, t),
-      successcolorContainer: Color.lerp(successcolorContainer, other.successcolorContainer, t),
-      onSuccesscolorContainer: Color.lerp(onSuccesscolorContainer, other.onSuccesscolorContainer, t),
-      sourceErrorcolor: Color.lerp(sourceErrorcolor, other.sourceErrorcolor, t),
-      errorcolor: Color.lerp(errorcolor, other.errorcolor, t),
-      onErrorcolor: Color.lerp(onErrorcolor, other.onErrorcolor, t),
-      errorcolorContainer: Color.lerp(errorcolorContainer, other.errorcolorContainer, t),
-      onErrorcolorContainer: Color.lerp(onErrorcolorContainer, other.onErrorcolorContainer, t),
+      sourceSuccess: Color.lerp(sourceSuccess, other.sourceSuccess, t),
+      success: Color.lerp(success, other.success, t),
+      onSuccess: Color.lerp(onSuccess, other.onSuccess, t),
+      successContainer: Color.lerp(successContainer, other.successContainer, t),
+      onSuccessContainer:
+          Color.lerp(onSuccessContainer, other.onSuccessContainer, t),
+      sourceWarning: Color.lerp(sourceWarning, other.sourceWarning, t),
+      warning: Color.lerp(warning, other.warning, t),
+      onWarning: Color.lerp(onWarning, other.onWarning, t),
+      warningContainer: Color.lerp(warningContainer, other.warningContainer, t),
+      onWarningContainer:
+          Color.lerp(onWarningContainer, other.onWarningContainer, t),
     );
   }
 
   /// Returns an instance of [CustomColors] in which the following custom
   /// colors are harmonized with [dynamic]'s [ColorScheme.primary].
-  ///   * [CustomColors.sourceWarningcolor]
-  ///   * [CustomColors.warningcolor]
-  ///   * [CustomColors.onWarningcolor]
-  ///   * [CustomColors.warningcolorContainer]
-  ///   * [CustomColors.onWarningcolorContainer]
-  ///   * [CustomColors.sourceSuccesscolor]
-  ///   * [CustomColors.successcolor]
-  ///   * [CustomColors.onSuccesscolor]
-  ///   * [CustomColors.successcolorContainer]
-  ///   * [CustomColors.onSuccesscolorContainer]
-  ///   * [CustomColors.sourceErrorcolor]
-  ///   * [CustomColors.errorcolor]
-  ///   * [CustomColors.onErrorcolor]
-  ///   * [CustomColors.errorcolorContainer]
-  ///   * [CustomColors.onErrorcolorContainer]
+  ///   * [CustomColors.sourceSuccess]
+  ///   * [CustomColors.success]
+  ///   * [CustomColors.onSuccess]
+  ///   * [CustomColors.successContainer]
+  ///   * [CustomColors.onSuccessContainer]
+  ///   * [CustomColors.sourceWarning]
+  ///   * [CustomColors.warning]
+  ///   * [CustomColors.onWarning]
+  ///   * [CustomColors.warningContainer]
+  ///   * [CustomColors.onWarningContainer]
   ///
   /// See also:
   ///   * <https://m3.material.io/styles/color/the-color-system/custom-colors#harmonization>
   CustomColors harmonized(ColorScheme dynamic) {
     return copyWith(
-      sourceWarningcolor: sourceWarningcolor!.harmonizeWith(dynamic.primary),
-      warningcolor: warningcolor!.harmonizeWith(dynamic.primary),
-      onWarningcolor: onWarningcolor!.harmonizeWith(dynamic.primary),
-      warningcolorContainer: warningcolorContainer!.harmonizeWith(dynamic.primary),
-      onWarningcolorContainer: onWarningcolorContainer!.harmonizeWith(dynamic.primary),
-      sourceSuccesscolor: sourceSuccesscolor!.harmonizeWith(dynamic.primary),
-      successcolor: successcolor!.harmonizeWith(dynamic.primary),
-      onSuccesscolor: onSuccesscolor!.harmonizeWith(dynamic.primary),
-      successcolorContainer: successcolorContainer!.harmonizeWith(dynamic.primary),
-      onSuccesscolorContainer: onSuccesscolorContainer!.harmonizeWith(dynamic.primary),
-      sourceErrorcolor: sourceErrorcolor!.harmonizeWith(dynamic.primary),
-      errorcolor: errorcolor!.harmonizeWith(dynamic.primary),
-      onErrorcolor: onErrorcolor!.harmonizeWith(dynamic.primary),
-      errorcolorContainer: errorcolorContainer!.harmonizeWith(dynamic.primary),
-      onErrorcolorContainer: onErrorcolorContainer!.harmonizeWith(dynamic.primary),
+      sourceSuccess: sourceSuccess!.harmonizeWith(dynamic.primary),
+      success: success!.harmonizeWith(dynamic.primary),
+      onSuccess: onSuccess!.harmonizeWith(dynamic.primary),
+      successContainer: successContainer!.harmonizeWith(dynamic.primary),
+      onSuccessContainer: onSuccessContainer!.harmonizeWith(dynamic.primary),
+      sourceWarning: sourceWarning!.harmonizeWith(dynamic.primary),
+      warning: warning!.harmonizeWith(dynamic.primary),
+      onWarning: onWarning!.harmonizeWith(dynamic.primary),
+      warningContainer: warningContainer!.harmonizeWith(dynamic.primary),
+      onWarningContainer: onWarningContainer!.harmonizeWith(dynamic.primary),
     );
   }
 }

@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
         if (lightDynamic != null && darkDynamic != null) {
           lightScheme = lightDynamic.harmonized();
           lightCustomColors = lightCustomColors.harmonized(lightScheme);
+
           darkScheme = darkDynamic.harmonized();
           darkCustomColors = darkCustomColors.harmonized(darkScheme);
         } else {
