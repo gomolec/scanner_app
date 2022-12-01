@@ -26,8 +26,8 @@ class ProductAdapter extends TypeAdapter<Product> {
       updated: fields[6] as DateTime,
       marked: fields[7] as bool,
       note: fields[8] as String,
-      imageUrl: fields[9] as String?,
-      url: fields[10] as String?,
+      imageUrl: fields[9] as String,
+      url: fields[10] as String,
     );
   }
 
@@ -84,8 +84,8 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       updated: DateTime.parse(json['updated'] as String),
       marked: json['marked'] as bool? ?? false,
       note: json['note'] as String? ?? "",
-      imageUrl: json['imageUrl'] as String?,
-      url: json['url'] as String?,
+      imageUrl: json['imageUrl'] as String? ?? "",
+      url: json['url'] as String? ?? "",
     );
 
 Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{

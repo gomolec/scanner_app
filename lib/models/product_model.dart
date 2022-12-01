@@ -26,9 +26,9 @@ class Product extends Equatable {
   @HiveField(8)
   final String note;
   @HiveField(9)
-  final String? imageUrl;
+  final String imageUrl;
   @HiveField(10)
-  final String? url;
+  final String url;
 
   const Product({
     this.id = 0,
@@ -40,8 +40,8 @@ class Product extends Equatable {
     required this.updated,
     this.marked = false,
     this.note = "",
-    this.imageUrl,
-    this.url,
+    this.imageUrl = "",
+    this.url = "",
   });
 
   factory Product.fromJson(Map<String, dynamic> json) =>
@@ -83,7 +83,7 @@ class Product extends Equatable {
   }
 
   @override
-  List<Object?> get props {
+  List<Object> get props {
     return [
       id,
       name,
