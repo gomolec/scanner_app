@@ -22,7 +22,7 @@ class HistoryAction extends Equatable {
     required this.id,
     this.oldProduct,
     this.updatedProduct,
-    required this.isRedo,
+    this.isRedo = false,
   });
 
   HistoryAction copyWith({
@@ -39,6 +39,11 @@ class HistoryAction extends Equatable {
       isRedo: isRedo ?? this.isRedo,
     );
   }
+
+  factory HistoryAction.fromJson(Map<String, dynamic> json) =>
+      _$HistoryActionFromJson(json);
+
+  Map<String, dynamic> toJson() => _$HistoryActionToJson(this);
 
   @override
   String toString() {

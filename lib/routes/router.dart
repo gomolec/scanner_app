@@ -40,6 +40,11 @@ import '../pages/pages.dart';
       name: 'ScannerRouter',
       page: ScannerPage,
     ),
+    AutoRoute(
+      path: 'sessions',
+      name: 'SessionsRouter',
+      page: SessionsPage,
+    ),
   ],
 )
 class $AppRouter {}

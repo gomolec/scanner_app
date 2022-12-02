@@ -37,6 +37,12 @@ class AppRouter extends _i2.RootStackRouter {
         child: _i1.ScannerPage(key: args.key),
       );
     },
+    SessionsRouter.name: (routeData) {
+      return _i2.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i1.SessionsPage(),
+      );
+    },
     DashboardRouter.name: (routeData) {
       return _i2.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -100,6 +106,10 @@ class AppRouter extends _i2.RootStackRouter {
           ScannerRouter.name,
           path: 'scanner',
         ),
+        _i2.RouteConfig(
+          SessionsRouter.name,
+          path: 'sessions',
+        ),
       ];
 }
 
@@ -138,6 +148,18 @@ class ScannerRouterArgs {
   String toString() {
     return 'ScannerRouterArgs{key: $key}';
   }
+}
+
+/// generated route for
+/// [_i1.SessionsPage]
+class SessionsRouter extends _i2.PageRouteInfo<void> {
+  const SessionsRouter()
+      : super(
+          SessionsRouter.name,
+          path: 'sessions',
+        );
+
+  static const String name = 'SessionsRouter';
 }
 
 /// generated route for

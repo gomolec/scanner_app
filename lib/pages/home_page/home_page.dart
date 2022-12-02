@@ -1,7 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import '../../routes/router.gr.dart';
 
 class HomePage extends StatelessWidget {
@@ -28,23 +26,25 @@ class HomePage extends StatelessWidget {
         },
         destinations: const <Widget>[
           NavigationDestination(
-            icon: FaIcon(FontAwesomeIcons.house),
+            icon: Icon(Icons.dashboard_outlined),
+            selectedIcon: Icon(Icons.dashboard_rounded),
             label: 'Start',
           ),
           NavigationDestination(
-            icon: FaIcon(FontAwesomeIcons.boxesStacked),
+            icon: Icon(Icons.inventory_2_outlined),
+            selectedIcon: Icon(Icons.inventory_2_rounded),
             label: 'Produkty',
           ),
           NavigationDestination(
-            icon: FaIcon(FontAwesomeIcons.barcode),
+            icon: Icon(Icons.qr_code_scanner_rounded),
             label: 'Skaner',
           ),
           NavigationDestination(
-            icon: FaIcon(FontAwesomeIcons.clockRotateLeft),
+            icon: Icon(Icons.history_rounded),
             label: 'Historia',
           ),
           NavigationDestination(
-            icon: FaIcon(FontAwesomeIcons.ellipsis),
+            icon: Icon(Icons.more_horiz_rounded),
             label: 'Więcej',
           ),
         ],

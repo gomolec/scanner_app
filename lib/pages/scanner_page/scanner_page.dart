@@ -17,7 +17,7 @@ class ScannerPage extends StatelessWidget {
             controller: scannerController,
             fit: BoxFit.cover,
             onDetect: (barcode) {
-              print(barcode.barcodes.first.rawValue);
+              //print(barcode.barcodes.first.rawValue);
             },
           ),
         ],

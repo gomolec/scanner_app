@@ -46,6 +46,11 @@ class Session extends Equatable {
     ];
   }
 
+  factory Session.fromJson(Map<String, dynamic> json) =>
+      _$SessionFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SessionToJson(this);
+
   Session copyWith({
     String? id,
     String? name,
