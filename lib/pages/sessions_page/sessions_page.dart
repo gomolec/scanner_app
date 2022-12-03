@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scanner_app/models/models.dart';
 import 'package:scanner_app/pages/sessions_page/widgets/session_tile.dart';
+import 'package:scanner_app/routes/router.gr.dart';
 
 import '../../cubits/cubits.dart';
 import '../../widgets/widgets.dart';
@@ -33,10 +34,10 @@ class SessionsPage extends StatelessWidget {
               IconButton(
                 onPressed: () {
                   //TODO dodać przenoszenie do strony z tworzeniem sesji
-                  context.read<SessionsCubit>().createNewSession();
+                  context.router.push(const NewSessionRouter());
                 },
                 tooltip: 'Utwórz sesję',
-                icon: const Icon(Icons.create_new_folder_rounded),
+                icon: const Icon(Icons.add_circle_outline_rounded),
               ),
             ],
           ),

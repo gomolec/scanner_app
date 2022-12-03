@@ -54,10 +54,19 @@ class SessionsCubit extends Cubit<SessionsState> {
     ));
   }
 
-  void createNewSession() async {
+  void createNewSession({
+    String? name,
+    String? author,
+    String? notes,
+    bool? downloadUrls,
+  }) async {
     //TODO dodać opcję ze nowa sesja nie zostaje automatycznie aktualną
     final Session actualSession = await sessionsRepository.createNewSession(
+      name: name,
+      author: author,
       //author: //settingsRepository.getSetting("author"),
+      notes: notes,
+      downloadUrls: downloadUrls,
       protectedId: actualSessionId,
     );
     actualSessionId = actualSession.id;

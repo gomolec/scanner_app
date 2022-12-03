@@ -11,20 +11,21 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i2;
-import 'package:flutter/cupertino.dart' as _i4;
-import 'package:flutter/material.dart' as _i3;
+import 'package:auto_route/auto_route.dart' as _i3;
+import 'package:auto_route/empty_router_widgets.dart' as _i2;
+import 'package:flutter/cupertino.dart' as _i5;
+import 'package:flutter/material.dart' as _i4;
 
 import '../pages/pages.dart' as _i1;
 
-class AppRouter extends _i2.RootStackRouter {
-  AppRouter([_i3.GlobalKey<_i3.NavigatorState>? navigatorKey])
+class AppRouter extends _i3.RootStackRouter {
+  AppRouter([_i4.GlobalKey<_i4.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i2.PageFactory> pagesMap = {
+  final Map<String, _i3.PageFactory> pagesMap = {
     HomeRoute.name: (routeData) {
-      return _i2.MaterialPageX<dynamic>(
+      return _i3.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.HomePage(),
       );
@@ -32,91 +33,115 @@ class AppRouter extends _i2.RootStackRouter {
     ScannerRouter.name: (routeData) {
       final args = routeData.argsAs<ScannerRouterArgs>(
           orElse: () => const ScannerRouterArgs());
-      return _i2.MaterialPageX<dynamic>(
+      return _i3.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i1.ScannerPage(key: args.key),
       );
     },
     SessionsRouter.name: (routeData) {
-      return _i2.MaterialPageX<dynamic>(
+      return _i3.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i1.SessionsPage(),
+        child: const _i2.EmptyRouterPage(),
       );
     },
     DashboardRouter.name: (routeData) {
-      return _i2.MaterialPageX<dynamic>(
+      return _i3.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.DashboardPage(),
       );
     },
     ProductsRouter.name: (routeData) {
-      return _i2.MaterialPageX<dynamic>(
+      return _i3.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.ProductsPage(),
       );
     },
     HistoryRouter.name: (routeData) {
-      return _i2.MaterialPageX<dynamic>(
+      return _i3.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.HistoryPage(),
       );
     },
     MenuRouter.name: (routeData) {
-      return _i2.MaterialPageX<dynamic>(
+      return _i3.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.MenuPage(),
+      );
+    },
+    SessionsRoute.name: (routeData) {
+      return _i3.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i1.SessionsPage(),
+      );
+    },
+    NewSessionRouter.name: (routeData) {
+      return _i3.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i1.NewSessionPage(),
       );
     },
   };
 
   @override
-  List<_i2.RouteConfig> get routes => [
-        _i2.RouteConfig(
+  List<_i3.RouteConfig> get routes => [
+        _i3.RouteConfig(
           HomeRoute.name,
           path: '/',
           children: [
-            _i2.RouteConfig(
+            _i3.RouteConfig(
               DashboardRouter.name,
               path: 'dashboard',
               parent: HomeRoute.name,
             ),
-            _i2.RouteConfig(
+            _i3.RouteConfig(
               ProductsRouter.name,
               path: 'products',
               parent: HomeRoute.name,
             ),
-            _i2.RouteConfig(
+            _i3.RouteConfig(
               ScannerRouter.name,
               path: 'scanner',
               parent: HomeRoute.name,
             ),
-            _i2.RouteConfig(
+            _i3.RouteConfig(
               HistoryRouter.name,
               path: 'history',
               parent: HomeRoute.name,
             ),
-            _i2.RouteConfig(
+            _i3.RouteConfig(
               MenuRouter.name,
               path: 'menu',
               parent: HomeRoute.name,
             ),
           ],
         ),
-        _i2.RouteConfig(
+        _i3.RouteConfig(
           ScannerRouter.name,
           path: 'scanner',
         ),
-        _i2.RouteConfig(
+        _i3.RouteConfig(
           SessionsRouter.name,
           path: 'sessions',
+          children: [
+            _i3.RouteConfig(
+              SessionsRoute.name,
+              path: '',
+              parent: SessionsRouter.name,
+            ),
+            _i3.RouteConfig(
+              NewSessionRouter.name,
+              path: 'new',
+              parent: SessionsRouter.name,
+            ),
+          ],
         ),
       ];
 }
 
 /// generated route for
 /// [_i1.HomePage]
-class HomeRoute extends _i2.PageRouteInfo<void> {
-  const HomeRoute({List<_i2.PageRouteInfo>? children})
+class HomeRoute extends _i3.PageRouteInfo<void> {
+  const HomeRoute({List<_i3.PageRouteInfo>? children})
       : super(
           HomeRoute.name,
           path: '/',
@@ -128,8 +153,8 @@ class HomeRoute extends _i2.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.ScannerPage]
-class ScannerRouter extends _i2.PageRouteInfo<ScannerRouterArgs> {
-  ScannerRouter({_i4.Key? key})
+class ScannerRouter extends _i3.PageRouteInfo<ScannerRouterArgs> {
+  ScannerRouter({_i5.Key? key})
       : super(
           ScannerRouter.name,
           path: 'scanner',
@@ -142,7 +167,7 @@ class ScannerRouter extends _i2.PageRouteInfo<ScannerRouterArgs> {
 class ScannerRouterArgs {
   const ScannerRouterArgs({this.key});
 
-  final _i4.Key? key;
+  final _i5.Key? key;
 
   @override
   String toString() {
@@ -151,12 +176,13 @@ class ScannerRouterArgs {
 }
 
 /// generated route for
-/// [_i1.SessionsPage]
-class SessionsRouter extends _i2.PageRouteInfo<void> {
-  const SessionsRouter()
+/// [_i2.EmptyRouterPage]
+class SessionsRouter extends _i3.PageRouteInfo<void> {
+  const SessionsRouter({List<_i3.PageRouteInfo>? children})
       : super(
           SessionsRouter.name,
           path: 'sessions',
+          initialChildren: children,
         );
 
   static const String name = 'SessionsRouter';
@@ -164,7 +190,7 @@ class SessionsRouter extends _i2.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.DashboardPage]
-class DashboardRouter extends _i2.PageRouteInfo<void> {
+class DashboardRouter extends _i3.PageRouteInfo<void> {
   const DashboardRouter()
       : super(
           DashboardRouter.name,
@@ -176,7 +202,7 @@ class DashboardRouter extends _i2.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.ProductsPage]
-class ProductsRouter extends _i2.PageRouteInfo<void> {
+class ProductsRouter extends _i3.PageRouteInfo<void> {
   const ProductsRouter()
       : super(
           ProductsRouter.name,
@@ -188,7 +214,7 @@ class ProductsRouter extends _i2.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.HistoryPage]
-class HistoryRouter extends _i2.PageRouteInfo<void> {
+class HistoryRouter extends _i3.PageRouteInfo<void> {
   const HistoryRouter()
       : super(
           HistoryRouter.name,
@@ -200,7 +226,7 @@ class HistoryRouter extends _i2.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.MenuPage]
-class MenuRouter extends _i2.PageRouteInfo<void> {
+class MenuRouter extends _i3.PageRouteInfo<void> {
   const MenuRouter()
       : super(
           MenuRouter.name,
@@ -208,4 +234,28 @@ class MenuRouter extends _i2.PageRouteInfo<void> {
         );
 
   static const String name = 'MenuRouter';
+}
+
+/// generated route for
+/// [_i1.SessionsPage]
+class SessionsRoute extends _i3.PageRouteInfo<void> {
+  const SessionsRoute()
+      : super(
+          SessionsRoute.name,
+          path: '',
+        );
+
+  static const String name = 'SessionsRoute';
+}
+
+/// generated route for
+/// [_i1.NewSessionPage]
+class NewSessionRouter extends _i3.PageRouteInfo<void> {
+  const NewSessionRouter()
+      : super(
+          NewSessionRouter.name,
+          path: 'new',
+        );
+
+  static const String name = 'NewSessionRouter';
 }

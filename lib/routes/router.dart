@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:auto_route/empty_router_widgets.dart';
 import '../pages/pages.dart';
 
 @MaterialAutoRouter(
@@ -43,7 +44,18 @@ import '../pages/pages.dart';
     AutoRoute(
       path: 'sessions',
       name: 'SessionsRouter',
-      page: SessionsPage,
+      page: EmptyRouterPage,
+      children: [
+        AutoRoute(
+          path: '',
+          page: SessionsPage,
+        ),
+        AutoRoute(
+          path: 'new',
+          name: 'NewSessionRouter',
+          page: NewSessionPage,
+        )
+      ],
     ),
   ],
 )

@@ -28,15 +28,23 @@ class SessionsRepository {
 
   void addToStream(List<Session> sessions) => _controller.sink.add(sessions);
 
-  Future<Session> createNewSession(
-      {String author = "", String? protectedId}) async {
+  Future<Session> createNewSession({
+    String? name,
+    String? author,
+    String? notes,
+    bool? downloadUrls,
+    String? protectedId,
+  }) async {
     if (_sessionsBox == null) {
       await getSavedSessions();
     }
     final newSession = Session(
       id: const Uuid().v1(),
       startDate: DateTime.now(),
-      author: author,
+      name: name ?? "",
+      author: author ?? "",
+      notes: notes ?? "",
+      downloadUrls: downloadUrls ?? false,
     );
     if (_sessionsBox!.length >= maxStoredSessions) {
       Session deletedSession = _sessionsBox!.values.toList().first;

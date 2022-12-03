@@ -62,7 +62,7 @@ HistoryAction _$HistoryActionFromJson(Map<String, dynamic> json) =>
       updatedProduct: json['updatedProduct'] == null
           ? null
           : Product.fromJson(json['updatedProduct'] as Map<String, dynamic>),
-      isRedo: json['isRedo'] as bool,
+      isRedo: json['isRedo'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$HistoryActionToJson(HistoryAction instance) =>
