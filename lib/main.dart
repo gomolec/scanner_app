@@ -45,6 +45,13 @@ class MyApp extends StatelessWidget {
           ),
           lazy: false,
         ),
+        BlocProvider(
+          create: (context) => ProductsCubit(
+            productsRepository: productsRepository,
+            historyRepository: historyRepository,
+          ),
+          lazy: false,
+        ),
       ],
       child: DynamicColorBuilder(
         builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {

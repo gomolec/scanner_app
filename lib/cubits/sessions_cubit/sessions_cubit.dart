@@ -57,7 +57,7 @@ class SessionsCubit extends Cubit<SessionsState> {
   void createNewSession({
     String? name,
     String? author,
-    String? notes,
+    String? note,
     bool? downloadUrls,
   }) async {
     //TODO dodać opcję ze nowa sesja nie zostaje automatycznie aktualną
@@ -65,7 +65,7 @@ class SessionsCubit extends Cubit<SessionsState> {
       name: name,
       author: author,
       //author: //settingsRepository.getSetting("author"),
-      notes: notes,
+      note: note,
       downloadUrls: downloadUrls,
       protectedId: actualSessionId,
     );

@@ -23,7 +23,7 @@ class SessionAdapter extends TypeAdapter<Session> {
       endDate: fields[3] as DateTime?,
       author: fields[4] as String,
       downloadUrls: fields[5] as bool,
-      notes: fields[6] as String,
+      note: fields[6] as String,
     );
   }
 
@@ -44,7 +44,7 @@ class SessionAdapter extends TypeAdapter<Session> {
       ..writeByte(5)
       ..write(obj.downloadUrls)
       ..writeByte(6)
-      ..write(obj.notes);
+      ..write(obj.note);
   }
 
   @override
@@ -71,7 +71,7 @@ Session _$SessionFromJson(Map<String, dynamic> json) => Session(
           : DateTime.parse(json['endDate'] as String),
       author: json['author'] as String? ?? "",
       downloadUrls: json['downloadUrls'] as bool? ?? false,
-      notes: json['notes'] as String? ?? "",
+      note: json['note'] as String? ?? "",
     );
 
 Map<String, dynamic> _$SessionToJson(Session instance) => <String, dynamic>{
@@ -81,5 +81,5 @@ Map<String, dynamic> _$SessionToJson(Session instance) => <String, dynamic>{
       'endDate': instance.endDate?.toIso8601String(),
       'author': instance.author,
       'downloadUrls': instance.downloadUrls,
-      'notes': instance.notes,
+      'note': instance.note,
     };

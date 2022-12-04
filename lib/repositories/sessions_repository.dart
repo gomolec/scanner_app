@@ -31,7 +31,7 @@ class SessionsRepository {
   Future<Session> createNewSession({
     String? name,
     String? author,
-    String? notes,
+    String? note,
     bool? downloadUrls,
     String? protectedId,
   }) async {
@@ -43,7 +43,7 @@ class SessionsRepository {
       startDate: DateTime.now(),
       name: name ?? "",
       author: author ?? "",
-      notes: notes ?? "",
+      note: note ?? "",
       downloadUrls: downloadUrls ?? false,
     );
     if (_sessionsBox!.length >= maxStoredSessions) {

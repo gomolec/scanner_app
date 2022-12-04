@@ -20,7 +20,7 @@ class Session extends Equatable {
   @HiveField(5)
   final bool downloadUrls;
   @HiveField(6)
-  final String notes;
+  final String note;
 
   const Session({
     required this.id,
@@ -29,12 +29,12 @@ class Session extends Equatable {
     this.endDate,
     this.author = "",
     this.downloadUrls = false,
-    this.notes = "",
+    this.note = "",
   });
 
   @override
   String toString() {
-    return 'Session(id: $id, name: $name, startDate: $startDate, endDate: $endDate, author: $author, downloadUrls: $downloadUrls, notes: $notes)';
+    return 'Session(id: $id, name: $name, startDate: $startDate, endDate: $endDate, author: $author, downloadUrls: $downloadUrls, note: $note)';
   }
 
   @override
@@ -46,7 +46,7 @@ class Session extends Equatable {
       endDate,
       author,
       downloadUrls,
-      notes,
+      note,
     ];
   }
 
@@ -62,7 +62,7 @@ class Session extends Equatable {
       DateTime? Function()? endDate,
       String? author,
       bool? downloadUrls,
-      String? notes}) {
+      String? note}) {
     return Session(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -70,7 +70,7 @@ class Session extends Equatable {
       endDate: endDate != null ? endDate() : this.endDate,
       author: author ?? this.author,
       downloadUrls: downloadUrls ?? this.downloadUrls,
-      notes: notes ?? this.notes,
+      note: note ?? this.note,
     );
   }
 }

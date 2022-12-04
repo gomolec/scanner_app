@@ -4,13 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../cubits/cubits.dart';
 
+//TODO nowy cubit, ktory zarzaca cala strona, strona powinna przyjmowac jako argument
+//sesje, czyli mozna tez edytowac sesje, lub je tworzyc (kiedy argument == null)
 class NewSessionPage extends StatelessWidget {
   const NewSessionPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final TextEditingController nameController = TextEditingController();
-    final TextEditingController notesController = TextEditingController();
+    final TextEditingController noteController = TextEditingController();
     //TODO powinno pobierać nazwę użytkownika
     final TextEditingController authorController = TextEditingController(
       text: "Sebastian Gomolec - programista",
@@ -33,7 +35,7 @@ class NewSessionPage extends StatelessWidget {
             onPressed: () {
               context.read<SessionsCubit>().createNewSession(
                     name: nameController.text,
-                    notes: notesController.text,
+                    note: noteController.text,
                     author: authorController.text,
                     downloadUrls: downloadUrls,
                   );
@@ -59,7 +61,7 @@ class NewSessionPage extends StatelessWidget {
               ),
               const SizedBox(height: 24.0),
               TextField(
-                controller: notesController,
+                controller: noteController,
                 keyboardType: TextInputType.multiline,
                 minLines: 4,
                 maxLines: null,
