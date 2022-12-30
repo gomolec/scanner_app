@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../routes/router.gr.dart';
 
 import '../../../cubits/cubits.dart';
 import '../../../widgets/custom_popup_menu_item.dart';
@@ -17,7 +19,9 @@ class ProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        context.router.push(SingleProductRouter(productId: product.id));
+      },
       child: Padding(
         padding: const EdgeInsets.only(
           left: 16.0,

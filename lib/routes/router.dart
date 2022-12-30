@@ -57,6 +57,11 @@ import '../pages/pages.dart';
         )
       ],
     ),
+    AutoRoute(
+      name: 'SingleProductRouter',
+      path: 'product/:productId',
+      page: SingleProductPage,
+    ),
   ],
 )
 class $AppRouter {}

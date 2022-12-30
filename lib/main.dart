@@ -52,6 +52,10 @@ class MyApp extends StatelessWidget {
           ),
           lazy: false,
         ),
+        BlocProvider(
+          create: (context) => ProductEditingCubit(),
+          lazy: false,
+        ),
       ],
       child: DynamicColorBuilder(
         builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {

@@ -44,6 +44,19 @@ class AppRouter extends _i3.RootStackRouter {
         child: const _i2.EmptyRouterPage(),
       );
     },
+    SingleProductRouter.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<SingleProductRouterArgs>(
+          orElse: () => SingleProductRouterArgs(
+              productId: pathParams.getInt('productId')));
+      return _i3.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: _i1.SingleProductPage(
+          key: args.key,
+          productId: args.productId,
+        ),
+      );
+    },
     DashboardRouter.name: (routeData) {
       return _i3.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -135,6 +148,10 @@ class AppRouter extends _i3.RootStackRouter {
             ),
           ],
         ),
+        _i3.RouteConfig(
+          SingleProductRouter.name,
+          path: 'product/:productId',
+        ),
       ];
 }
 
@@ -186,6 +203,41 @@ class SessionsRouter extends _i3.PageRouteInfo<void> {
         );
 
   static const String name = 'SessionsRouter';
+}
+
+/// generated route for
+/// [_i1.SingleProductPage]
+class SingleProductRouter extends _i3.PageRouteInfo<SingleProductRouterArgs> {
+  SingleProductRouter({
+    _i5.Key? key,
+    required int productId,
+  }) : super(
+          SingleProductRouter.name,
+          path: 'product/:productId',
+          args: SingleProductRouterArgs(
+            key: key,
+            productId: productId,
+          ),
+          rawPathParams: {'productId': productId},
+        );
+
+  static const String name = 'SingleProductRouter';
+}
+
+class SingleProductRouterArgs {
+  const SingleProductRouterArgs({
+    this.key,
+    required this.productId,
+  });
+
+  final _i5.Key? key;
+
+  final int productId;
+
+  @override
+  String toString() {
+    return 'SingleProductRouterArgs{key: $key, productId: $productId}';
+  }
 }
 
 /// generated route for
