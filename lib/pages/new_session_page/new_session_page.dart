@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scanner_app/repositories/repositories.dart';
 
 import '../../cubits/cubits.dart';
 
@@ -33,7 +34,7 @@ class NewSessionPage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.save_rounded),
             onPressed: () {
-              context.read<SessionsCubit>().createNewSession(
+              context.read<SessionsRepository>().createNewSession(
                     name: nameController.text,
                     note: noteController.text,
                     author: authorController.text,
