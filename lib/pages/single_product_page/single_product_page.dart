@@ -37,7 +37,7 @@ class _SingleProductPageState extends State<SingleProductPage> {
             IconToggleButton(
               icon: const Icon(Icons.flag_outlined),
               selectedIcon: const Icon(Icons.flag),
-              isSelected: product!.marked,
+              isSelected: product.marked,
               selectedColor: Theme.of(context).colorScheme.error,
               onPressed: () {
                 product = product!.copyWith(marked: !product!.marked);

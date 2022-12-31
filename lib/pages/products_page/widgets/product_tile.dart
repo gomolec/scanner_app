@@ -39,7 +39,7 @@ class ProductTile extends StatelessWidget {
               if (product.marked) {
                 color = Theme.of(context).colorScheme.errorContainer;
                 iconData = Icons.flag_outlined;
-                iconColor = Theme.of(context).colorScheme.onErrorContainer!;
+                iconColor = Theme.of(context).colorScheme.onErrorContainer;
               } else {
                 iconData = Icons.inventory_2_outlined;
                 if (product.quantity == product.targetQuantity) {

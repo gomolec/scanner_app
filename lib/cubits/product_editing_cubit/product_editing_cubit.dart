@@ -8,7 +8,6 @@ class ProductEditingCubit extends Cubit<ProductEditingState> {
 
   @override
   Future<void> close() {
-    print("ProductEditingCubit closed");
     return super.close();
   }
 }

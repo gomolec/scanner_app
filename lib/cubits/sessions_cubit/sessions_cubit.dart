@@ -31,9 +31,9 @@ class SessionsCubit extends Cubit<SessionsState> {
       : sessionsRepository.findById(actualSessionId!);
 
   void _subscribe() {
-    _subscription = sessionsRepository.sessions.listen(
+    _subscription = sessionsRepository.stream.listen(
       (items) {
-        sessions = items;
+        sessions = items.sessions;
 
         emitSessions();
       },
@@ -67,7 +67,6 @@ class SessionsCubit extends Cubit<SessionsState> {
       //author: //settingsRepository.getSetting("author"),
       note: note,
       downloadUrls: downloadUrls,
-      protectedId: actualSessionId,
     );
     actualSessionId = actualSession.id;
   }

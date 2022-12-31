@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:scanner_app/models/sessions_repository_stream.dart';
 import 'package:uuid/uuid.dart';
 
 import '../models/models.dart';
@@ -10,8 +11,8 @@ import 'products_repository.dart';
 
 class SessionsRepository {
   final HiveInterface hiveInterface;
-  final _controller = BehaviorSubject<List<Session>>();
   final int maxStoredSessions;
+
   final ProductsRepository productsRepository;
   final HistoryRepository historyRepository;
 
@@ -20,24 +21,27 @@ class SessionsRepository {
     this.maxStoredSessions = 8,
     required this.productsRepository,
     required this.historyRepository,
-  });
+  }) {
+    addToStream(const SessionsRepositoryStream(
+      actualSessionId: null,
+      sessions: [],
+    ));
+    getSavedSessions();
+  }
 
   Box<Session>? _sessionsBox;
 
-  Stream<List<Session>> get sessions => _controller.stream;
+  final _stream = BehaviorSubject<SessionsRepositoryStream>();
+  Stream<SessionsRepositoryStream> get stream => _stream.stream;
 
-  void addToStream(List<Session> sessions) => _controller.sink.add(sessions);
+  void addToStream(SessionsRepositoryStream value) => _stream.sink.add(value);
 
   Future<Session> createNewSession({
     String? name,
     String? author,
     String? note,
     bool? downloadUrls,
-    String? protectedId,
   }) async {
-    if (_sessionsBox == null) {
-      await getSavedSessions();
-    }
     final newSession = Session(
       id: const Uuid().v1(),
       startDate: DateTime.now(),
@@ -47,8 +51,8 @@ class SessionsRepository {
       downloadUrls: downloadUrls ?? false,
     );
     if (_sessionsBox!.length >= maxStoredSessions) {
-      Session deletedSession = _sessionsBox!.values.toList().first;
-      if (deletedSession.id == protectedId) {
+      Session deletedSession = _sessionsBox!.values.toList()[0];
+      if (deletedSession.id == _stream.value.actualSessionId) {
         deletedSession = _sessionsBox!.values.toList()[1];
       }
       await deleteSession(deletedSession.id, notify: false);
@@ -56,14 +60,21 @@ class SessionsRepository {
     await _sessionsBox!.add(newSession);
     await productsRepository.openProductsSession(newSession.id);
     await historyRepository.openHistorySession(newSession.id);
-    addToStream(_sessionsBox!.values.toList());
+    addToStream(
+      _stream.value.copyWith(
+        sessions: _sessionsBox!.values.toList(),
+      ),
+    );
     return newSession;
   }
 
   Future<void> getSavedSessions() async {
-    //TODO moze wywalać błędy kiedy cos zostalo zapisane źle - wiec trzeba sprawdzic czy nie wywala błędów
     _sessionsBox = await hiveInterface.openBox('sessions');
-    addToStream(_sessionsBox!.values.toList());
+    addToStream(
+      _stream.value.copyWith(
+        sessions: _sessionsBox!.values.toList(),
+      ),
+    );
   }
 
   Session? findById(String id) {
@@ -79,19 +90,38 @@ class SessionsRepository {
     if (index != -1) {
       await _sessionsBox!.delete(_sessionsBox!.keys.toList()[index]);
       if (notify) {
-        addToStream(_sessionsBox!.values.toList());
+        if (id == _stream.value.actualSessionId) {
+          addToStream(
+            _stream.value.copyWith(
+              actualSessionId: () => null,
+              sessions: _sessionsBox!.values.toList(),
+            ),
+          );
+        } else {
+          addToStream(
+            _stream.value.copyWith(
+              sessions: _sessionsBox!.values.toList(),
+            ),
+          );
+        }
       }
       await productsRepository.deleteProductsSession(id);
       await historyRepository.deleteHistorySession(id);
     }
   }
 
-  Future<void> updateSession(Session session) async {
+  Future<void> updateSession(Session session, {bool notify = true}) async {
     final index =
         _sessionsBox!.values.toList().indexWhere((it) => it.id == session.id);
     if (index != -1) {
       await _sessionsBox!.put(_sessionsBox!.keys.toList()[index], session);
-      addToStream(_sessionsBox!.values.toList());
+      if (notify) {
+        addToStream(
+          _stream.value.copyWith(
+            sessions: _sessionsBox!.values.toList(),
+          ),
+        );
+      }
     }
   }
 
@@ -99,7 +129,13 @@ class SessionsRepository {
     Session? session = findById(id);
     if (session != null) {
       session = session.copyWith(endDate: () => DateTime.now());
-      updateSession(session);
+      updateSession(session, notify: false);
+      addToStream(
+        _stream.value.copyWith(
+          actualSessionId: () => null,
+          sessions: _sessionsBox!.values.toList(),
+        ),
+      );
       await productsRepository.closeProductsSession();
       await historyRepository.closeHistorySession();
     }
@@ -109,10 +145,16 @@ class SessionsRepository {
     Session? session = findById(id);
     if (session != null) {
       session = session.copyWith(endDate: () => null);
-      updateSession(session);
+      updateSession(session, notify: false);
       await productsRepository.openProductsSession(id);
       await historyRepository.openHistorySession(id);
     }
+    addToStream(
+      _stream.value.copyWith(
+        actualSessionId: () => id,
+        sessions: _sessionsBox!.values.toList(),
+      ),
+    );
     return session;
   }
 
@@ -133,7 +175,7 @@ class SessionsRepository {
   //       importedHistoryActions: importedSessionData["historyActions"],
   //     );
 
-  //     addToStream(_sessionsBox!.values.toList());
+  //     addToSessionsStream(_sessionsBox!.values.toList());
   //   }
   // }
 
@@ -177,7 +219,7 @@ class SessionsRepository {
   //       importedHistoryActions: [],
   //     );
 
-  //     addToStream(_sessionsBox!.values.toList());
+  //     addToSessionsStream(_sessionsBox!.values.toList());
   //   }
   // }
 
@@ -214,7 +256,7 @@ class SessionsRepository {
   //       importedHistoryActions: [],
   //     );
 
-  //     addToStream(_sessionsBox!.values.toList());
+  //     addToSessionsStream(_sessionsBox!.values.toList());
   //   }
   // }
 
