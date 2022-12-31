@@ -88,9 +88,16 @@ class AppRouter extends _i3.RootStackRouter {
       );
     },
     NewSessionRouter.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<NewSessionRouterArgs>(
+          orElse: () => NewSessionRouterArgs(
+              initialSessionId: pathParams.optString('initialSessionId')));
       return _i3.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i1.NewSessionPage(),
+        child: _i1.NewSessionPage(
+          key: args.key,
+          initialSessionId: args.initialSessionId,
+        ),
       );
     },
   };
@@ -143,7 +150,7 @@ class AppRouter extends _i3.RootStackRouter {
             ),
             _i3.RouteConfig(
               NewSessionRouter.name,
-              path: 'new',
+              path: 'new:initialSessionId',
               parent: SessionsRouter.name,
             ),
           ],
@@ -302,12 +309,35 @@ class SessionsRoute extends _i3.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.NewSessionPage]
-class NewSessionRouter extends _i3.PageRouteInfo<void> {
-  const NewSessionRouter()
-      : super(
+class NewSessionRouter extends _i3.PageRouteInfo<NewSessionRouterArgs> {
+  NewSessionRouter({
+    _i5.Key? key,
+    required String? initialSessionId,
+  }) : super(
           NewSessionRouter.name,
-          path: 'new',
+          path: 'new:initialSessionId',
+          args: NewSessionRouterArgs(
+            key: key,
+            initialSessionId: initialSessionId,
+          ),
+          rawPathParams: {'initialSessionId': initialSessionId},
         );
 
   static const String name = 'NewSessionRouter';
+}
+
+class NewSessionRouterArgs {
+  const NewSessionRouterArgs({
+    this.key,
+    required this.initialSessionId,
+  });
+
+  final _i5.Key? key;
+
+  final String? initialSessionId;
+
+  @override
+  String toString() {
+    return 'NewSessionRouterArgs{key: $key, initialSessionId: $initialSessionId}';
+  }
 }

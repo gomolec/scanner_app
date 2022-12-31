@@ -51,7 +51,7 @@ import '../pages/pages.dart';
           page: SessionsPage,
         ),
         AutoRoute(
-          path: 'new',
+          path: 'new:initialSessionId',
           name: 'NewSessionRouter',
           page: NewSessionPage,
         )

@@ -1,11 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-
-import '../../../cubits/cubits.dart';
-import '../../../models/models.dart';
-import '../../../theme/theme.dart';
-import '../../../widgets/widgets.dart';
+import 'package:scanner_app/pages/pages.dart';
+import '../../../../models/models.dart';
+import '../../../../routes/router.gr.dart';
+import '../../../../theme/theme.dart';
+import '../../../../widgets/widgets.dart';
 
 class SessionTile extends StatelessWidget {
   final bool actual;
@@ -156,7 +157,9 @@ class SessionTile extends StatelessWidget {
                         title: "Zakończ",
                         iconData: Icons.save_rounded,
                         onTap: () {
-                          context.read<SessionsCubit>().endSession();
+                          context
+                              .read<SessionsBloc>()
+                              .add(SessionEnded(id: session.id));
                         },
                       )
                     : CustomPopupMenuItem(
@@ -164,8 +167,8 @@ class SessionTile extends StatelessWidget {
                         iconData: Icons.open_in_new_rounded,
                         onTap: () {
                           context
-                              .read<SessionsCubit>()
-                              .restoreSession(id: session.id);
+                              .read<SessionsBloc>()
+                              .add(SessionRestored(id: session.id));
                         },
                       ),
                 CustomPopupMenuItem(
@@ -173,12 +176,22 @@ class SessionTile extends StatelessWidget {
                   iconData: Icons.file_upload_outlined,
                   onTap: () {},
                 ),
+                CustomPopupMenuItem(
+                  title: "Edytuj",
+                  iconData: Icons.edit,
+                  onTap: () {
+                    context.router
+                        .push(NewSessionRouter(initialSessionId: session.id));
+                  },
+                ),
                 const PopupMenuDivider(),
                 CustomPopupMenuItem(
                   title: "Usuń",
                   iconData: Icons.delete_outlined,
                   onTap: () {
-                    context.read<SessionsCubit>().deleteSession(id: session.id);
+                    context
+                        .read<SessionsBloc>()
+                        .add(SessionDeleted(id: session.id));
                   },
                 ),
               ],
