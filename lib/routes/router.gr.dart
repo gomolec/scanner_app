@@ -48,12 +48,12 @@ class AppRouter extends _i3.RootStackRouter {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<SingleProductRouterArgs>(
           orElse: () => SingleProductRouterArgs(
-              productId: pathParams.getInt('productId')));
+              initialProductId: pathParams.optInt('initialProductId')));
       return _i3.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i1.SingleProductPage(
           key: args.key,
-          productId: args.productId,
+          initialProductId: args.initialProductId,
         ),
       );
     },
@@ -157,7 +157,7 @@ class AppRouter extends _i3.RootStackRouter {
         ),
         _i3.RouteConfig(
           SingleProductRouter.name,
-          path: 'product/:productId',
+          path: 'product/:initialProductId',
         ),
       ];
 }
@@ -217,15 +217,15 @@ class SessionsRouter extends _i3.PageRouteInfo<void> {
 class SingleProductRouter extends _i3.PageRouteInfo<SingleProductRouterArgs> {
   SingleProductRouter({
     _i5.Key? key,
-    required int productId,
+    int? initialProductId,
   }) : super(
           SingleProductRouter.name,
-          path: 'product/:productId',
+          path: 'product/:initialProductId',
           args: SingleProductRouterArgs(
             key: key,
-            productId: productId,
+            initialProductId: initialProductId,
           ),
-          rawPathParams: {'productId': productId},
+          rawPathParams: {'initialProductId': initialProductId},
         );
 
   static const String name = 'SingleProductRouter';
@@ -234,16 +234,16 @@ class SingleProductRouter extends _i3.PageRouteInfo<SingleProductRouterArgs> {
 class SingleProductRouterArgs {
   const SingleProductRouterArgs({
     this.key,
-    required this.productId,
+    this.initialProductId,
   });
 
   final _i5.Key? key;
 
-  final int productId;
+  final int? initialProductId;
 
   @override
   String toString() {
-    return 'SingleProductRouterArgs{key: $key, productId: $productId}';
+    return 'SingleProductRouterArgs{key: $key, initialProductId: $initialProductId}';
   }
 }
 

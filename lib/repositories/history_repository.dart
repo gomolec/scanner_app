@@ -7,7 +7,6 @@ import '../models/models.dart';
 
 class HistoryRepository {
   final HiveInterface hiveInterface;
-  final _controller = BehaviorSubject<List<HistoryAction>>();
   final int maxStoredHistoryActions;
 
   HistoryRepository({
@@ -19,17 +18,17 @@ class HistoryRepository {
   List<HistoryAction> _history = [];
   int currentActivityIndex = -1;
 
-  Stream<List<HistoryAction>> get history => _controller.stream;
+  final _stream = BehaviorSubject<List<HistoryAction>>();
+  Stream<List<HistoryAction>> get stream => _stream.stream;
   bool get isSessionOpened => _historyBox != null;
 
-  void addToStream(List<HistoryAction> history) =>
-      _controller.sink.add(history);
+  void addToStream(List<HistoryAction> stream) => _stream.sink.add(stream);
 
   Future<void> openHistorySession(String id) async {
     if (_historyBox != null) {
       await closeHistorySession();
     }
-    _historyBox = await Hive.openBox("history-$id");
+    _historyBox = await Hive.openBox("stream-$id");
     _history = _historyBox!.values.toList();
     currentActivityIndex = -1;
     if (_history.isNotEmpty) {
@@ -49,10 +48,10 @@ class HistoryRepository {
   }
 
   Future<void> deleteHistorySession(String id) async {
-    if (_historyBox != null && _historyBox!.name == "history-$id") {
+    if (_historyBox != null && _historyBox!.name == "stream-$id") {
       await closeHistorySession();
     }
-    hiveInterface.deleteBoxFromDisk("history-$id");
+    hiveInterface.deleteBoxFromDisk("stream-$id");
   }
 
   void addActivity(Product? oldProduct, Product? updatedProduct) {
@@ -129,7 +128,7 @@ class HistoryRepository {
     required List<HistoryAction> importedHistoryActions,
   }) async {
     final Box<HistoryAction> importedHistoryBox =
-        await hiveInterface.openBox("history-$id");
+        await hiveInterface.openBox("stream-$id");
 
     importedHistoryBox.addAll(importedHistoryActions);
 
@@ -138,7 +137,7 @@ class HistoryRepository {
 
   Future<List<HistoryAction>> exportHistorySession({required String id}) async {
     final Box<HistoryAction> exportedHistoryBox =
-        await hiveInterface.openBox("history-$id");
+        await hiveInterface.openBox("stream-$id");
 
     final List<HistoryAction> exportedHistoryActions =
         exportedHistoryBox.values.toList();

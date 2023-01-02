@@ -32,10 +32,10 @@ class Product extends Equatable {
 
   const Product({
     this.id = 0,
-    required this.name,
-    required this.code,
+    this.name = "",
+    this.code = "",
     this.quantity = 0,
-    required this.targetQuantity,
+    this.targetQuantity = 0,
     required this.created,
     required this.updated,
     this.marked = false,

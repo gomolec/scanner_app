@@ -23,17 +23,23 @@ class PageAlert extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                leadingIconData,
-                size: 24.0,
-                color: Theme.of(context).colorScheme.secondary,
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: Icon(
+                  leadingIconData,
+                  size: 24.0,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
               ),
               const SizedBox(width: 16.0),
-              Text(
-                title,
-                style: Theme.of(context).textTheme.headlineSmall,
-                textAlign: TextAlign.center,
+              Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                  textAlign: TextAlign.left,
+                ),
               ),
             ],
           ),

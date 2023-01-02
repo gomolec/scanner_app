@@ -59,7 +59,7 @@ import '../pages/pages.dart';
     ),
     AutoRoute(
       name: 'SingleProductRouter',
-      path: 'product/:productId',
+      path: 'product/:initialProductId',
       page: SingleProductPage,
     ),
   ],

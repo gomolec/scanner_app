@@ -29,7 +29,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   String searchQuery = "";
 
   void _subscribe() {
-    _subscription = productsRepository.products.listen(
+    _subscription = productsRepository.stream.listen(
       (items) {
         if (productsRepository.isSessionOpened) {
           products = items.toList();

@@ -7,19 +7,21 @@ import '../models/models.dart';
 
 class ProductsRepository {
   final HiveInterface hiveInterface;
-  final _controller = BehaviorSubject<List<Product>>();
 
   ProductsRepository({
     required this.hiveInterface,
   });
 
   Box<Product>? _productsBox;
+  bool get isSessionOpened => _productsBox != null;
   List<Product> _products = [];
 
-  Stream<List<Product>> get products => _controller.stream;
-  bool get isSessionOpened => _productsBox != null;
+  final _stream = BehaviorSubject<List<Product>>();
+  Stream<List<Product>> get stream => _stream.stream;
 
-  void addToStream(List<Product> products) => _controller.sink.add(products);
+  void addToStream(List<Product> products) {
+    _stream.sink.add(products);
+  }
 
   Future<void> openProductsSession(String id) async {
     if (_productsBox != null) {
@@ -52,12 +54,14 @@ class ProductsRepository {
         .firstWhere((product) => product!.id == id, orElse: () => null);
   }
 
-  void updateProduct(Product product) {
+  void updateProduct(Product product, {bool changeUpdated = true}) {
     final index = _products.indexWhere((it) => it.id == product.id);
     if (index != -1) {
-      _products[index] = product;
+      final Product newProduct =
+          changeUpdated ? product.copyWith(updated: DateTime.now()) : product;
+      _products[index] = newProduct;
       addToStream(_products);
-      _productsBox!.put(product.id, product);
+      _productsBox!.put(product.id, newProduct);
     }
   }
 

@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../routes/router.gr.dart';
+import '../../../../routes/router.gr.dart';
 
-import '../../../cubits/cubits.dart';
-import '../../../widgets/custom_popup_menu_item.dart';
-import '../../../models/models.dart';
-import '../../../theme/custom_color.g.dart';
+import '../../../../widgets/custom_popup_menu_item.dart';
+import '../../../../models/models.dart';
+import '../../../../theme/custom_color.g.dart';
+import '../../bloc/products_bloc/products_bloc.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;
@@ -20,7 +20,7 @@ class ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.router.push(SingleProductRouter(productId: product.id));
+        context.router.push(SingleProductRouter(initialProductId: product.id));
       },
       child: Padding(
         padding: const EdgeInsets.only(
@@ -165,15 +165,16 @@ class ProductTile extends StatelessWidget {
                     title: product.marked ? "Usuń przypięcie" : "Przypnij",
                     iconData: product.marked ? Icons.flag_outlined : Icons.flag,
                     onTap: () => context
-                        .read<ProductsCubit>()
-                        .toggleIsPinned(product.id),
+                        .read<ProductsBloc>()
+                        .add(ProductMarkingToggled(product: product)),
                   ),
                   const PopupMenuDivider(),
                   CustomPopupMenuItem(
                     title: "Usuń",
                     iconData: Icons.delete_outlined,
-                    onTap: () =>
-                        context.read<ProductsCubit>().deleteProduct(product.id),
+                    onTap: () => context
+                        .read<ProductsBloc>()
+                        .add(ProductDeleted(product: product)),
                   ),
                 ],
               ),
