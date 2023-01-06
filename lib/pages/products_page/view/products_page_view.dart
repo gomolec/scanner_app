@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:scanner_app/pages/products_page/models/models.dart';
-import 'package:scanner_app/repositories/products_repository.dart';
-
+import '../../../repositories/repositories.dart';
 import '../../../routes/router.gr.dart';
 import '../../../widgets/widgets.dart';
 import '../bloc/products_bloc/products_bloc.dart';
@@ -18,6 +17,7 @@ class ProductsPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => ProductsBloc(
         productsRepository: context.read<ProductsRepository>(),
+        productsHistoryRepository: context.read<ProductsHistoryRepository>(),
       )..add(const ProductsSubscriptionRequested()),
       child: const ProductsPageView(),
     );

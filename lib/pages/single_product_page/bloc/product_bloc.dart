@@ -9,8 +9,10 @@ part 'product_state.dart';
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ProductBloc({
     required ProductsRepository productsRepository,
+    required ProductsHistoryRepository productsHistoryRepository,
     required int? initialProductId,
   })  : _productsRepository = productsRepository,
+        _productsHistoryRepository = productsHistoryRepository,
         _initialProduct = initialProductId != null
             ? productsRepository.findById(initialProductId)
             : null,
@@ -27,6 +29,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   final ProductsRepository _productsRepository;
+  final ProductsHistoryRepository _productsHistoryRepository;
   final Product? _initialProduct;
 
   void _onSubscriptionRequested(
@@ -113,10 +116,14 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       marked: state.marked,
     );
 
-    emit(const ProductState(status: ProductStatus.loading));
+    emit(state.copyWith(status: ProductStatus.loading));
 
     try {
-      _productsRepository.updateProduct(newProduct);
+      if (_initialProduct == null) {
+        _productsHistoryRepository.addProduct(newProduct);
+      } else {
+        _productsHistoryRepository.updateProduct(newProduct);
+      }
       emit(state.copyWith(
         status: ProductStatus.initial,
         initialProduct: newProduct,
@@ -126,6 +133,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         targetQuantity: newProduct.targetQuantity,
         marked: newProduct.marked,
         note: newProduct.note,
+        didChanged: false,
       ));
     } catch (e) {
       emit(state.copyWith(
@@ -138,9 +146,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     ProductMarkedChanged event,
     Emitter<ProductState> emit,
   ) {
-    if (state.initialProduct != null) {
+    if (_initialProduct != null) {
       try {
-        _productsRepository.updateProduct(
+        _productsHistoryRepository.updateProduct(
           state.initialProduct!.copyWith(marked: event.marked),
           changeUpdated: false,
         );
@@ -166,7 +174,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ) {
     if (state.initialProduct != null) {
       try {
-        _productsRepository.deleteProduct(_initialProduct!.id);
+        _productsHistoryRepository.deleteProduct(_initialProduct!);
         emit(state.copyWith(
           status: ProductStatus.success,
         ));

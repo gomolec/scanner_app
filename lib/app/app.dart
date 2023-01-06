@@ -10,6 +10,7 @@ class App extends StatelessWidget {
   final SessionsRepository sessionsRepository;
   final ProductsRepository productsRepository;
   final HistoryRepository historyRepository;
+  final ProductsHistoryRepository productsHistoryRepository;
   final AppRouter appRouter;
 
   const App({
@@ -17,6 +18,7 @@ class App extends StatelessWidget {
     required this.sessionsRepository,
     required this.productsRepository,
     required this.historyRepository,
+    required this.productsHistoryRepository,
     required this.appRouter,
   }) : super(key: key);
 
@@ -32,6 +34,9 @@ class App extends StatelessWidget {
         ),
         RepositoryProvider.value(
           value: historyRepository,
+        ),
+        RepositoryProvider.value(
+          value: productsHistoryRepository,
         ),
       ],
       child: DynamicColorBuilder(

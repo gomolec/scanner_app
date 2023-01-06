@@ -18,14 +18,22 @@ void bootstrap() {
 
   final HiveInterface hiveInterface = Hive;
 
-  late final ProductsRepository productsRepository =
+  final ProductsRepository productsRepository =
       ProductsRepository(hiveInterface: hiveInterface);
 
-  late final HistoryRepository historyRepository =
-      HistoryRepository(hiveInterface: hiveInterface);
-
-  late final SessionsRepository sessionsRepository = SessionsRepository(
+  final HistoryRepository historyRepository = HistoryRepository(
     hiveInterface: hiveInterface,
+    maxStoredHistoryActions: 10,
+  );
+
+  final SessionsRepository sessionsRepository = SessionsRepository(
+    hiveInterface: hiveInterface,
+    productsRepository: productsRepository,
+    historyRepository: historyRepository,
+  );
+
+  final ProductsHistoryRepository productsHistoryRepository =
+      ProductsHistoryRepository(
     productsRepository: productsRepository,
     historyRepository: historyRepository,
   );
@@ -39,6 +47,7 @@ void bootstrap() {
         sessionsRepository: sessionsRepository,
         productsRepository: productsRepository,
         historyRepository: historyRepository,
+        productsHistoryRepository: productsHistoryRepository,
       ),
     ),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),

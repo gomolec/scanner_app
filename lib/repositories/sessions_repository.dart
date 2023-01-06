@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:scanner_app/models/sessions_repository_stream.dart';
 import 'package:uuid/uuid.dart';
 
 import '../models/models.dart';

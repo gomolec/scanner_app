@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:scanner_app/pages/single_product_page/bloc/product_bloc.dart';
 import 'package:scanner_app/pages/single_product_page/view/widgets/widgets.dart';
-import 'package:scanner_app/repositories/products_repository.dart';
+import '../../../repositories/repositories.dart';
 
 class SingleProductPage extends StatelessWidget {
   final int? initialProductId;
@@ -19,6 +19,7 @@ class SingleProductPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => ProductBloc(
         productsRepository: context.read<ProductsRepository>(),
+        productsHistoryRepository: context.read<ProductsHistoryRepository>(),
         initialProductId: initialProductId,
       )..add(const ProductSubscriptionRequested()),
       child: const SingleProductPageView(),

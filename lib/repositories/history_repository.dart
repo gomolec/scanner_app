@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rxdart/rxdart.dart';
@@ -12,17 +13,28 @@ class HistoryRepository {
   HistoryRepository({
     required this.hiveInterface,
     this.maxStoredHistoryActions = 5,
-  });
+  }) {
+    _stream.sink.add(HistoryRepositoryStream(
+      historyActions: _history,
+      canUndo: false,
+      canRedo: false,
+    ));
+  }
 
   Box<HistoryAction>? _historyBox;
+  bool get isSessionOpened => _historyBox != null;
   List<HistoryAction> _history = [];
   int currentActivityIndex = -1;
 
-  final _stream = BehaviorSubject<List<HistoryAction>>();
-  Stream<List<HistoryAction>> get stream => _stream.stream;
-  bool get isSessionOpened => _historyBox != null;
+  final _stream = BehaviorSubject<HistoryRepositoryStream>();
+  Stream<HistoryRepositoryStream> get stream => _stream.stream;
 
-  void addToStream(List<HistoryAction> stream) => _stream.sink.add(stream);
+  void addToStream(List<HistoryAction> historyActions) =>
+      _stream.sink.add(_stream.value.copyWith(
+        historyActions: historyActions,
+        canRedo: canRedo(),
+        canUndo: canUndo(),
+      ));
 
   Future<void> openHistorySession(String id) async {
     if (_historyBox != null) {
@@ -54,7 +66,7 @@ class HistoryRepository {
     hiveInterface.deleteBoxFromDisk("stream-$id");
   }
 
-  void addActivity(Product? oldProduct, Product? updatedProduct) {
+  void addActivity({Product? oldProduct, Product? updatedProduct}) {
     if (oldProduct != updatedProduct) {
       int id = 0;
       if (currentActivityIndex > -1) {
@@ -85,12 +97,14 @@ class HistoryRepository {
 
   HistoryAction? undo() {
     if (_history.isNotEmpty && _history.first.isRedo == false) {
+      log("$_history", name: "undo in repo");
       final HistoryAction action =
           _history[currentActivityIndex].copyWith(isRedo: true);
       _history[currentActivityIndex] = action;
       _historyBox!.put(action.id, action);
       currentActivityIndex--;
-      addToStream(_history);
+      addToStream(_history.toList());
+      log("$_history", name: "undo in repo");
       return action;
     }
     return null;
@@ -103,7 +117,7 @@ class HistoryRepository {
           _history[currentActivityIndex].copyWith(isRedo: false);
       _history[currentActivityIndex] = action;
       _historyBox!.put(action.id, action);
-      addToStream(_history);
+      addToStream(_history.toList());
       return action;
     }
     return null;

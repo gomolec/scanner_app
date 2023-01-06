@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:scanner_app/pages/products_page/models/models.dart';
+import 'package:scanner_app/repositories/products_history_repository.dart';
 import 'package:scanner_app/repositories/products_repository.dart';
 
 import '../../../../models/models.dart';
@@ -11,7 +12,9 @@ part 'products_state.dart';
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   ProductsBloc({
     required ProductsRepository productsRepository,
+    required ProductsHistoryRepository productsHistoryRepository,
   })  : _productsRepository = productsRepository,
+        _productsHistoryRepository = productsHistoryRepository,
         super(const ProductsState()) {
     on<ProductsSubscriptionRequested>(_onSubscriptionRequested);
     on<ProductCreated>(_onProductCreated);
@@ -22,6 +25,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   }
 
   final ProductsRepository _productsRepository;
+  final ProductsHistoryRepository _productsHistoryRepository;
   final ProductsQuerier _querier = ProductsQuerier();
   final ProductsSorter _sorter = ProductsSorter();
 
@@ -79,21 +83,21 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     ProductCreated event,
     Emitter<ProductsState> emit,
   ) {
-    _productsRepository.addProduct(event.product);
+    _productsHistoryRepository.addProduct(event.product);
   }
 
   void _onProductDeleted(
     ProductDeleted event,
     Emitter<ProductsState> emit,
   ) {
-    _productsRepository.deleteProduct(event.product.id);
+    _productsHistoryRepository.deleteProduct(event.product);
   }
 
   void _onProductMarkingToggled(
     ProductMarkingToggled event,
     Emitter<ProductsState> emit,
   ) {
-    _productsRepository.updateProduct(
+    _productsHistoryRepository.updateProduct(
       event.product.copyWith(
         marked: !event.product.marked,
       ),

@@ -53,24 +53,24 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   void updateProduct(Product updatedProduct) {
     historyRepository.addActivity(
-      productsRepository.findById(updatedProduct.id),
-      updatedProduct,
+      oldProduct: productsRepository.findById(updatedProduct.id),
+      updatedProduct: updatedProduct,
     );
     productsRepository.updateProduct(updatedProduct);
   }
 
-  void deleteProduct(int id) {
-    historyRepository.addActivity(
-      productsRepository.findById(id),
-      null,
-    );
-    productsRepository.deleteProduct(id);
-  }
+  // void deleteProduct(int id) {
+  //   historyRepository.addActivity(
+  //     oldProduct: productsRepository.findById(id),
+  //     updatedProduct: null,
+  //   );
+  //   productsRepository.deleteProduct(id);
+  // }
 
   void addProduct(Product product) {
     historyRepository.addActivity(
-      null,
-      productsRepository.addProduct(product),
+      oldProduct: null,
+      updatedProduct: productsRepository.addProduct(product),
     );
   }
 

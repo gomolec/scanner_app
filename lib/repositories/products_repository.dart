@@ -54,7 +54,7 @@ class ProductsRepository {
         .firstWhere((product) => product!.id == id, orElse: () => null);
   }
 
-  void updateProduct(Product product, {bool changeUpdated = true}) {
+  Product? updateProduct(Product product, {bool changeUpdated = true}) {
     final index = _products.indexWhere((it) => it.id == product.id);
     if (index != -1) {
       final Product newProduct =
@@ -62,7 +62,9 @@ class ProductsRepository {
       _products[index] = newProduct;
       addToStream(_products);
       _productsBox!.put(product.id, newProduct);
+      return newProduct;
     }
+    return null;
   }
 
   Product addProduct(Product product) {
@@ -79,13 +81,15 @@ class ProductsRepository {
     return newProduct;
   }
 
-  void deleteProduct(int id) {
-    final index = _products.indexWhere((it) => it.id == id);
+  Product? deleteProduct(Product product) {
+    final index = _products.indexWhere((it) => it.id == product.id);
     if (index != -1) {
       _products.removeAt(index);
       addToStream(_products);
-      _productsBox!.delete(id);
+      _productsBox!.delete(product.id);
+      return product;
     }
+    return null;
   }
 
   Future<void> importProductsSession({
