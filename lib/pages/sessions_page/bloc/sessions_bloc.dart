@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:scanner_app/models/models.dart';
-import 'package:scanner_app/models/sessions_repository_stream.dart';
 import 'package:scanner_app/repositories/repositories.dart';
 
 part 'sessions_event.dart';

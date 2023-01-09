@@ -37,6 +37,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
       onData: (data) {
         List<HistoryAction> undoHistory = data.historyActions;
         undoHistory.removeWhere((element) => element.isRedo == true);
+        undoHistory = undoHistory.reversed.toList();
 
         if (undoHistory.isEmpty && !_historyRepository.isSessionOpened) {
           return state.copyWith(
